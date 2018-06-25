@@ -1,42 +1,72 @@
+<!DOCTYPE html>
 <html>
 <head>
-		<title>ChangeBackground</title>
-<style>
-body {
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
+  <title>Giphy App</title>
+  <style>
+.search-input-rounded
+{
+  width:250px;
+  height: 30px;
 }
+.search_button
+{
+  width:200px;
+  height:50px;
+  background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 
-#full {
-  position: absolute;
-  height: 100%;
-  width: 100%;
 }
 
 </style>
 </head>
-
 <body>
-<div id="full"></div>
-<script>
-var div = document.getElementById("full");
+  <center>
+  <h1 style="color:#1111ff"> Let's Search Some Gifs! </h1>
+  <div class="info">
+    <p> Search below to the wonderful world of Gifs! </p>
+      <form class="gif-form">
+        <input type="text" id="form-value" class="search-input-rounded"><br/><br/>
+        <button type="submit" class="search_button" onclick="fun()"> Search for GIFs </button><br/><br/>
+        <input type="reset" id="reset_button" value="Reset">
+      </form>
+      <div class="rando_facts animated bounceIn">
+        <img id="here_is_gif" src=""/>
+      </div>
+  </div>
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script type="text/javascript">
+          function fun()
+          {
+            alert("Wait for 5 second");
+          }
+        $( document ).ready(function(){
+		$('.search_button').on('click', function(){
+			var userInput = $('#form-value').val().trim();
+				userInput = userInput.replace(/ /g, "+");
+			var queryURL = 'http://api.giphy.com/v1/gifs/search?q=' + userInput + '&api_key=dc6zaTOxFJmzC';
+		$.ajax({url: queryURL, method: 'GET'}).done(function(response)
+		{
+		console.log(response.data);
+			var giphyURL = response.data[0].images.fixed_height.url;
+          console.log(giphyURL)
+		  $('#here_is_gif').attr('src', giphyURL);
+			});
+		$('#reset_button').on('click', function(){
+          })
+ return false;
+      })
+     });
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-function changeColor(){
-  div.style.backgroundColor= getRandomColor();
-}
-
-setInterval(changeColor,1000);
-
-</script>
+  </script>
+</center>
 </body>
 </html>
+
+
+
